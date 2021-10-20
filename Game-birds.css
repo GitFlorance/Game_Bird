@@ -75,6 +75,7 @@ body {
     height: 100%;
     position: absolute;
     bottom: -100px;
+    pointer-events: none;
 }
 #logo {
 	left: 35px;
@@ -91,13 +92,17 @@ body {
     transform: translateX(-50%);
 }
 .birdsAnimation__item {
-  animation-duration: 8s;
-  animation-iteration-count: 1;
-  height: 70px;
-  width: 70px;
-  animation-name: birAni;
-  animation-timing-function: linear;
-  margin: 10px;
+	animation-duration: 8s;
+	animation-iteration-count: 1;
+	height: 70px;
+	width: 70px;
+	position: absolute;
+	animation-name: birAni;
+	animation-timing-function: linear;
+	margin: 10px;
+}
+.css-conteiner {
+	position: relative;
 }
 @keyframes birAni {
   0% {

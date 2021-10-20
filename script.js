@@ -48,10 +48,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 	class BirdsElement {
 		constructor (container) {
-			this.element = document.createElement('img')
-			this.element.scr = birdIcon[Math.floor(Math.random()*birdIcon.lenght)];
-			//this.element.innerHTML = " ";
-			this.element.className = ".birdsAnimation__item";
+			this.element = new Image(); 
+			this.element.src = birdIcon[Math.floor(birdIcon.length * Math.random())];
+			console.log(birdIcon);
+			this.element.innerHTML = " ";
+			this.element.className = "birdsAnimation__item";
 			container.appendChild (this.element);
 			this.element.addEventListener ("click", () => {
 				scoreIndex.click();
@@ -71,22 +72,18 @@ document.addEventListener("DOMContentLoaded", ()=>{
     		const bird = new BirdsElement (this.birdsContainer);
     		this.birdList.push(bird)
   		},
-  		chenge() {
-		    const someBird = this.birdList.filter((item,index) => (index % 2 === 0));
-		    someBird.forEach((item) => item.colorBlue());        
-		},
+ 
 	}
-
-	const someCreate = setInterval(() => {
-		console.log('go');
-		birdConteiner.create();
-	} , 4000);
-	setTimeout(() => { clearInterval(someCreate);}, 40000);
 
 	const startButton = document.querySelector(".js-start_button");
 
 	startButton.addEventListener ("click", () => {
-
+			const someCreate = setInterval(() => {
+			console.log('go');
+			birdConteiner.create();
+		} , 4000);
+		setTimeout(() => { clearInterval(someCreate);}, 40000);
+		startButton.style.display = "none";
 	})
 
 });
