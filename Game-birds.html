@@ -2,7 +2,8 @@
 <html>
 <head>
 <title>Personal site</title>
-<link rel="stylesheet" href="Game-birds.css">	
+<link rel="stylesheet" href="Game-birds.css">
+<script type="text/javascript" src="script.js"></script>		
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -11,26 +12,24 @@
 	<div class="article">
 		<div class="article__date date">
 			<div class="date__index index__1">
-				<div>
-					<img class="iqon" src="./jpg/12.png" alt="star">
-				</div>
+				<img class="iqon" src="./jpg/12.png" alt="star">
 				<div class="scale score">
-					<div class="fon"></div>
+					<div class="fon js-score"></div>
 				</div>
-				
 			</div>
 			<div class="date__index index__2">
-				<div>
-					<img class="iqon" src="./jpg/11.png" alt="heart">
-				</div>
+				<img class="iqon" src="./jpg/11.png" alt="heart">
 				<div class="scale health">
-					<div class="fon"></div>
+					<div class="fon js-health"></div>
 				</div>
 			</div>
 		</div>
 		<div class = "article__button">
-			<div class="article__game">
+			<div class="article__game js-start_button">
 				New game
+			</div>
+			<div class="js-bird-conteiner">
+
 			</div>
 		</div>
 		<img id="forest" src="./jpg/forest.png" alt="forest">

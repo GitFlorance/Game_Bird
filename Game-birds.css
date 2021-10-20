@@ -29,6 +29,9 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	position: relative;
+    height: 60px;
+    align-items: center;
 }
 .index__1 {
 	margin-left: 50px;
@@ -81,5 +84,26 @@ body {
     bottom: 30px;
 }
 .iqon {
-	height: 50px;
+	height: 60px;
+	position: absolute;
+    left: 0px;
+    top: 0;
+    transform: translateX(-50%);
+}
+.birdsAnimation__item {
+  animation-duration: 8s;
+  animation-iteration-count: 1;
+  height: 70px;
+  width: 70px;
+  animation-name: birAni;
+  animation-timing-function: linear;
+  margin: 10px;
+}
+@keyframes birAni {
+  0% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
 }
