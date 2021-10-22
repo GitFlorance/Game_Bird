@@ -57,11 +57,19 @@ body {
 	border: 2px solid #101933;
 	border-radius: 10px;
 }
+.end {
+	height: 300px;
+	display: none;
+}
 .fon {
-	background: red;
-	width: 200px;
+	background: #CC0000;
+	width: 0px;
 	height: 30px;
 	border-radius: 4px;
+	transition: all 1s ease-out;
+}
+.fon2 {
+	background: #9900FF;
 }
 .scale {
 	background: #FFCCCC;
@@ -80,7 +88,7 @@ body {
 #logo {
 	left: 35px;
     /* margin-top: -100px; */
-    width: 260px;
+    width: 170px;
     position: absolute;
     bottom: 30px;
 }
@@ -91,24 +99,39 @@ body {
     top: 0;
     transform: translateX(-50%);
 }
-.birdsAnimation__item {
-	animation-duration: 8s;
-	animation-iteration-count: 1;
-	height: 70px;
-	width: 70px;
-	position: absolute;
-	animation-name: birAni;
-	animation-timing-function: linear;
-	margin: 10px;
-}
 .css-conteiner {
 	position: relative;
 }
+.bird__item {
+	height: auto;
+	width: 70px;
+	position: absolute;
+	margin: 10px;
+	cursor: crosshair;
+	transition: all 5s ease-out;
+	top: 0px;
+}
+.bird__item--ani {
+	animation: birAni 8s;
+	animation-timing-function: linear;
+}
 @keyframes birAni {
-  0% {
-    transform: translateX(-100px);
-  }
-  100% {
-    transform: translateX(100vw);
-  }
+  0% {transform: translateX(-100px);}
+  100% {transform: translateX(100vw);}
+}
+.bird__item--scaling {
+	animation: scaling 2s;
+}
+@keyframes scaling {
+	0% {transform: scale(1);}
+	70% {transform: scale(3);}
+	100% {transform: scale(2);}
+} 
+img {
+	-webkit-user-drag: none;
+  	-khtml-user-drag: none;
+  	-moz-user-drag: none;
+  	-o-user-drag: none;
+ 	user-drag: none;
+ 	user-select: none;
 }
