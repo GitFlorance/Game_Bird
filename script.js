@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", ()=>{
 
 	const startButton = document.querySelector(".js-start_button");
-	const backgroundClick = document.querySelector(".js-click-miss");
+	const background = document.querySelector(".js-click-miss");
 	const winButton =  document.querySelector(".js-over_win");
 	const loseButton =  document.querySelector(".js-over_lose");
 	const makeBang = "./jpg/bang.png";
@@ -21,21 +21,24 @@ document.addEventListener("DOMContentLoaded", ()=>{
 		 "./jpg/3.png",
 		 "./jpg/4.png",
 	];
+	const birdDirection = [
+		"bird__item--ani",
+		"bird__item--ani--back",
+	]
 
 	class BirdsElement {
 		constructor (container) {
 			this.element = new Image(); 
 			this.element.src = birdIcon[Math.floor(birdIcon.length * Math.random())];
-			console.log(birdIcon);
 			this.element.innerHTML = " ";
 			this.element.classList.add("bird__item");
-			this.element.classList.add("bird__item--ani");
+			this.element.classList.add(birdDirection[Math.floor(birdDirection.length * Math.random())]);
 			container.appendChild (this.element);
-			this.element.addEventListener ("click", (event) => {
+
+			const birdElementClick = (event) => {
 				event.stopPropagation();
-				scoreIndex.click();
+				birdClick();
 				this.cleanTimer();
-				console.log(getOffset(this.element).left, "this place");
 				this.element.style.left = (getOffset(this.element).left + "px");
 				this.element.classList.remove('bird__item--ani');
 				this.element.src = makeBang;
@@ -46,11 +49,16 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 				setTimeout(() => this.element.style.top = (getOffset(this.element).top + 350 + "px"),2000);
 
-			})
+				this.element.removeEventListener("click", birdElementClick);
+			}
+
+			this.element.addEventListener ("click", birdElementClick);
 			this.timer = setTimeout (this.deleteBird.bind(this), 8000);
 		}
 		deleteBird () {
 			this.element.remove();
+			this.element.removeEventListener("click", this.birdElementClick);
+			missClick();
 		}
 		cleanTimer () {
 			clearTimeout(this.timer);
@@ -61,16 +69,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
 		birdList: [],
 		birdsContainer: document.querySelector(".js-bird-conteiner"),
 		create() {
-			console.log(this.birdsContainer);
     		const bird = new BirdsElement (this.birdsContainer);
     		this.birdList.push(bird)
   		},
   		createIteration () {
-  		this.creationInterval = setInterval(() => {
-			console.log('go');
-			birdConteiner.create();
-		} , 4000);
-		thistimer = setTimeout(() => { clearInterval(someCreate);}, 40000);
+  			this.creationInterval = setInterval(() => {
+				birdConteiner.create();
+			} , 4000);
+			this.timer = setTimeout(() => { clearInterval(this.creationInterval);}, 50000);
   		},
   		clean() {
   			this.birdList.forEach(function(item) {
@@ -83,65 +89,58 @@ document.addEventListener("DOMContentLoaded", ()=>{
 	}
 
 	class Index {
-		constructor (value, selector) {
+		constructor (value, selector, diff) {
 			this.val = value;
 			this.elem = document.querySelector(selector);
+			this.diff = diff;
 		}	
 		setStartVal () {
 			console.log(this)
 			this.elem.style.width = this.val + '%';
 		}
-		update(value) {
-			this.val += value;
+		update() {
+			this.val += this.diff;
 			this.elem.style.width = this.val + '%';
 		}
  	};
 
-	class ScoreIndex extends Index {
-		constructor() {
-			super(0, '.js-score');
-			this.setStartVal = super.setStartVal.bind(this);
-		}
-		click() {
-			this.update(10);
-			if (this.val === 100) {
-				this.win();
-			}
-		}
-		win() {
-			birdConteiner.clean();
-			winButton.style.display = "block";
-			this.val = 0;
-			healthIndex.val = 100;
-		}
+	const scoreIndex = new Index(0, '.js-score', +10);
+	const healthIndex = new Index(100, '.js-health', -10);
 
+	const win = function () {
+		console.log("win");
+		birdConteiner.clean();
+		winButton.style.display = "block";
+		scoreIndex.val = 0;
+		healthIndex.val = 100;
 	};
 
-	class HealthIndex extends Index {
-		constructor() {
-			super(100, '.js-health');
-			this.setStartVal = super.setStartVal.bind(this);
+	const gameOver = function () {
+		console.log("lose");
+		birdConteiner.clean();
+		loseButton.style.display = "block";
+		healthIndex.val = 100;
+		scoreIndex.val = 0;
+	}; 
+
+	const final = function (value) {
+		if (value === 0) {
+			gameOver();
 		}
-		click() {
-			this.update(-10);
-			if (this.val === 0) {
-				this.gameOver();
-			}
+		if (value === 100) {
+			win();
 		}
-		gameOver() {
-			birdConteiner.clean();
-			loseButton.style.display = "block";
-			this.val = 100;
-			scoreIndex.val = 0;
-		}
+	}
+
+	function birdClick () {
+		scoreIndex.update();
+		final(scoreIndex.val);
 	};
 
-	const scoreIndex = new ScoreIndex();
-	const healthIndex = new HealthIndex();
-
-	const clickToBackground = function () {
-		healthIndex.click();
-	};
+	function missClick () {
+		healthIndex.update();
+		final(healthIndex.val);
+	}
 
 
 	startButton.addEventListener ("click", (event) => {
@@ -150,7 +149,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 		event.stopPropagation();
 		scoreIndex.setStartVal();
 		healthIndex.setStartVal();
-		backgroundClick.addEventListener("click", clickToBackground)
+		background.addEventListener("click", missClick);
 	})
 
 	winButton.addEventListener ("click", (event) => {
@@ -163,6 +162,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 		loseButton.style.display = "none";
 		startButton.style.display = "block";
 		event.stopPropagation();
+
 	})
 
 });

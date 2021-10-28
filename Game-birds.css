@@ -60,6 +60,7 @@ body {
 .end {
 	height: 300px;
 	display: none;
+	transition: opacity 0.3s ease-out;
 }
 .fon {
 	background: #CC0000;
@@ -119,6 +120,14 @@ body {
   0% {transform: translateX(-100px);}
   100% {transform: translateX(100vw);}
 }
+.bird__item--ani--back {
+	animation: birAni--back 8s;
+	animation-timing-function: linear;
+}
+@keyframes birAni--back {
+  0% {transform: translateX(100vw) scaleX(-1);}
+  100% {transform: translateX(-100px) scaleX(-1);}
+}
 .bird__item--scaling {
 	animation: scaling 2s;
 }
@@ -129,9 +138,6 @@ body {
 } 
 img {
 	-webkit-user-drag: none;
-  	-khtml-user-drag: none;
-  	-moz-user-drag: none;
-  	-o-user-drag: none;
  	user-drag: none;
  	user-select: none;
 }
